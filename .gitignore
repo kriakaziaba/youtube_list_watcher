@@ -1,3 +1,5 @@
 .idea/
 target/*
 youtube_list_watcher.iml
+.gitignore
+target/
