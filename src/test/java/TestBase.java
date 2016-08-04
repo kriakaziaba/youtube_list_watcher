@@ -13,10 +13,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class TestBase {
 
-    protected WebDriver driver;
+    static protected WebDriver driver;
 
     @Parameters({"browser"})
-    @BeforeClass
+    @BeforeSuite
     public void browserSetup(@Optional("chrome")String name){
         DesiredCapabilities cap;
         switch (name){
@@ -43,7 +43,7 @@ public class TestBase {
         }
     }
 
-    @AfterClass(alwaysRun = true)
+    @AfterSuite(alwaysRun = true)
     public void terminateDriver(){
         driver.quit();
     }

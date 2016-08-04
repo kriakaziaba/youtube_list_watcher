@@ -1,6 +1,9 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import pages.Video;
 
 /**
  * Created by DiR on 04.08.2016.
@@ -8,7 +11,7 @@ import org.testng.annotations.Test;
 public class TestCase1 extends TestBase {
 
 
-    @Test
+    @Test(enabled = false)
     public void newestVideo(){
         driver.get("https://www.youtube.com/");
         driver.findElement(By.id("masthead-search-term")).sendKeys("sladkoTV");
@@ -26,15 +29,27 @@ public class TestCase1 extends TestBase {
         sleep(2);
     }
 
-    @Parameters({"url_of_playlist"})
-    @Test
+    @Parameters({"urlOfPlaylist"})
+    @Test(enabled = false)
     public void playlist(String url){
         driver.get(url);
     }
 
-    @Parameters({"chanel"})
-    @Test
-    public void allChanel(String chanelName){
+    @Parameters({"urlOfVideo"})
+    @Test(enabled = true)
+    public void specificVideo(@Optional("https://www.youtube.com/watch?v=Cp0evXC3kvw") String url){
+        driver.get(url);
+        sleep(2);
+        Video video = PageFactory.initElements(driver, Video.class);
+        video.waitFotAjax();
+        video.turnOfAutoPlay();
+        sleep(video.getDuration());
+
+    }
+
+    @Parameters({"channel"})
+    @Test(enabled = false)
+    public void allChannel(String chanelName){
         driver.get("https://www.youtube.com/");
         driver.findElement(By.id("masthead-search-term")).sendKeys(chanelName);
         driver.findElement(By.id("masthead-search-term")).submit();

@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
  * Created by DiR on 04.08.2016.
  */
 public class Header extends BasePage{
-    Header(WebDriver driver) {
+    public Header(WebDriver driver) {
         super(driver);
     }
 

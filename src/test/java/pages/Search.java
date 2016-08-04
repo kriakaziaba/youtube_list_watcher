@@ -10,7 +10,7 @@ import java.util.List;
  * Created by DiR on 04.08.2016.
  */
 public class Search extends BasePage{
-    Search(WebDriver driver) {
+    public Search(WebDriver driver) {
         super(driver);
     }
 
