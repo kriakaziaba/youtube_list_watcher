@@ -1,19 +1,38 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.*;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by tku on 8/3/2016.
  */
 public class TestBase {
-    private WebDriver driver;
+
+    protected WebDriver driver;
+
+    @Parameters({"browser"})
     @BeforeClass
-    public void browserSetup(){
-        driver = new ChromeDriver();
+    public void browserSetup(@Optional("chrome")String name){
+        DesiredCapabilities cap;
+        switch (name){
+            case "ch":
+            default:
+                cap = DesiredCapabilities.chrome();
+                driver = new ChromeDriver(cap);
+                break;
+            case "ff":
+                cap = DesiredCapabilities.firefox();
+                cap.setCapability("marionette", true);
+                driver = new FirefoxDriver(cap);
+                break;
+        }
         driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     void sleep(int i){
@@ -24,25 +43,7 @@ public class TestBase {
         }
     }
 
-    @Test
-    public void test1(){
-        driver.get("https://www.youtube.com/");
-        driver.findElement(By.id("masthead-search-term")).sendKeys("sladkoTV");
-        driver.findElement(By.id("masthead-search-term")).submit();
-        sleep(2);
-        driver.findElement(By.cssSelector("h3>a")).click();
-        sleep(2);
-        driver.findElement(By.cssSelector("ul#channel-navigation-menu>li:nth-child(2)")).click();
-        sleep(2);
-        driver.findElement(By.cssSelector("h3>a")).click();
-        sleep(2);
-
-        String text = driver.findElement(By.cssSelector("span.ytp-time-duration")).getText();
-        System.out.println(text);
-        sleep(2);
-    }
-
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void terminateDriver(){
         driver.quit();
     }
