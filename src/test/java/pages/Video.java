@@ -20,8 +20,11 @@ public class Video extends BasePage {
     @FindBy(id = "autoplay-checkbox")
     private WebElement chbAutoPlay;
 
+    @FindBy(css = "input#autoplay-checkbox+label")
+    private WebElement chbAutoPlayLabel;
+
     public void turnOfAutoPlay(){
-        if (!chbAutoPlay.isSelected())
+        if (chbAutoPlay.isSelected())
             chbAutoPlay.click();
     }
 
@@ -38,6 +41,6 @@ public class Video extends BasePage {
                 break;
         }
         Duration duration = Duration.parse(time);
-        return (int) (duration.getSeconds() + 60);
+        return (int) (duration.getSeconds() + 1);
     }
 }

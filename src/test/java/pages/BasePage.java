@@ -14,11 +14,12 @@ public class BasePage {
     public BasePage(WebDriver driver){
         this.driver = driver;
         wait = new WebDriverWait(driver, 10);
+        header = PageFactory.initElements(driver, Header.class);
     }
 
     protected WebDriver driver;
     protected WebDriverWait wait;
-    protected Header header = PageFactory.initElements(this.driver, Header.class);
+    protected Header header;
 
 //    public void waitFotAjax(){
 //        JavascriptExecutor js = (JavascriptExecutor) driver;
