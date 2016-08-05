@@ -37,13 +37,28 @@ public class TestCase1 extends TestBase {
 
     @Parameters({"urlOfVideo"})
     @Test(enabled = true)
-    public void specificVideo(@Optional("https://www.youtube.com/watch?v=Cp0evXC3kvw") String url){
+    public void specificVideo(@Optional("https://www.youtube.com/watch?v=k3Pc9U2FJa0") String url){
         driver.get(url);
         Video video = PageFactory.initElements(driver, Video.class);
         video.waitFotAjax();
         sleep(3);
         video.turnOfAutoPlay();
         sleep(video.getDuration());
+    }
+
+    @Parameters({"urlOfVideo"})
+    @Test(enabled = true)
+    public void specificVideoAndAllSuggested(@Optional("https://www.youtube.com/watch?v=k3Pc9U2FJa0") String url){
+        driver.get(url);
+        Video video = PageFactory.initElements(driver, Video.class);
+        video.waitFotAjax();
+        sleep(3);
+        video.turnOfAutoPlay();
+        sleep(video.getDuration());
+        while (video.goToAutoPlayVideoIfSameChannel()){
+            video.turnOfAutoPlay();
+            sleep(video.getDuration());
+        }
     }
 
     @Parameters({"channel"})
