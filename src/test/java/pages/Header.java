@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
@@ -20,8 +21,11 @@ public class Header{
     @FindBy(id = "masthead-search-term")
     private WebElement txbSearch;
 
-    public void serch(String text){
+    public Search searchAndClearBefore(String text){
+        txbSearch.sendKeys(text);
+        txbSearch.clear();
         txbSearch.sendKeys(text);
         txbSearch.submit();
+        return PageFactory.initElements(driver, Search.class);
     }
 }

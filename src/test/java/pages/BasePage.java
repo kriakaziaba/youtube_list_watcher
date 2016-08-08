@@ -19,7 +19,7 @@ public class BasePage {
 
     protected WebDriver driver;
     protected WebDriverWait wait;
-    protected Header header;
+    public Header header;
 
 //    public void waitFotAjax(){
 //        JavascriptExecutor js = (JavascriptExecutor) driver;

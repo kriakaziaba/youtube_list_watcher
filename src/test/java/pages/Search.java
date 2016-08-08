@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
@@ -17,8 +18,17 @@ public class Search extends BasePage{
     @FindBy(css = "h3.yt-lockup-title>a")
     private List<WebElement> listLinks;
 
-    public void clickSeeerchResult(int index){
+    public ChanelHome clickSearchResultChannel(int index){
+        waitFotAjax();
         listLinks.get(index).click();
         waitFotAjax();
+        return PageFactory.initElements(driver, ChanelHome.class);
+    }
+
+    public Video clickSearchResultVideo(int index){
+        waitFotAjax();
+        listLinks.get(index).click();
+        waitFotAjax();
+        return PageFactory.initElements(driver, Video.class);
     }
 }
