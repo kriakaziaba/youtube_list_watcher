@@ -9,7 +9,7 @@ import pages.*;
  */
 public class TestCase1 extends TestBase {
 
-
+    @Parameters({"channel"})
     @Test
     public void newestVideo(@Optional("ptd19871")String channelName){
         driver.get("https://www.youtube.com/");
