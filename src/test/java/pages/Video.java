@@ -1,8 +1,11 @@
 package pages;
 
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.time.Duration;
 import java.util.List;
@@ -36,12 +39,22 @@ public class Video extends BasePage {
     @FindBy(css = "span.stat.attribution")
     private List<WebElement> list_textSuggestedNameOfChanel;
 
+    @FindBy(id = "playlist-current-index")
+    private WebElement textPlaylistCurrentIndex;
+
+    @FindBy(id = "playlist-length")
+    private WebElement textPlaylistLenght;
+
+    @FindBy(css = "video[src]")
+    private WebElement blockVideo;
+
     public void turnOfAutoPlay(){
         if (chbAutoPlay.isSelected())
             chbAutoPlay.click();
     }
 
     public Integer getDuration(){
+        new Actions(driver).moveToElement(blockVideo).moveByOffset(10, 10).perform();
         String time = textDuration.getText();
         String[] splitted = time.split(":");
         System.out.println("lol " + time);
@@ -65,5 +78,39 @@ public class Video extends BasePage {
             waitFotAjax();
         }
         return isSameChannel;
+    }
+
+    public boolean isPlaylistEnding(){
+        boolean isEnding;
+        waitFotAjax();
+        String length = "";
+        String current = "";
+        try{
+            length = textPlaylistLenght.getText();
+        }
+        catch (StaleElementReferenceException e){
+            waitFotAjax();
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+            length = textPlaylistLenght.getText();
+        }
+        try{
+            current = textPlaylistCurrentIndex.getText();
+        }
+        catch (StaleElementReferenceException e){
+            waitFotAjax();
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+            current = textPlaylistCurrentIndex.getText();
+        }
+        isEnding = !length.isEmpty() && !current.isEmpty() && length.startsWith(current + " ");
+        System.out.println(isEnding + " " + length + " " + current);
+        return isEnding;
     }
 }

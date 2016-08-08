@@ -18,11 +18,11 @@ public class Search extends BasePage{
     @FindBy(css = "h3.yt-lockup-title>a")
     private List<WebElement> listLinks;
 
-    public ChanelHome clickSearchResultChannel(int index){
+    public ChannelHome clickSearchResultChannel(int index){
         waitFotAjax();
         listLinks.get(index).click();
         waitFotAjax();
-        return PageFactory.initElements(driver, ChanelHome.class);
+        return PageFactory.initElements(driver, ChannelHome.class);
     }
 
     public Video clickSearchResultVideo(int index){
