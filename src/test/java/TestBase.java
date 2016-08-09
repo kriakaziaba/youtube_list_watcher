@@ -1,6 +1,7 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -22,8 +23,9 @@ public class TestBase {
         switch (name){
             case "ch":
             default:
-                cap = DesiredCapabilities.chrome();
-                driver = new ChromeDriver(cap);
+                ChromeOptions options = new ChromeOptions();
+                options.setBinary("/usr/bin/chromium-browser");
+                driver = new ChromeDriver(options);
                 break;
             case "ff":
                 cap = DesiredCapabilities.firefox();
