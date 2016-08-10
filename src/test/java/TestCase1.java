@@ -11,10 +11,11 @@ public class TestCase1 extends TestBase {
 
     @Parameters({"channel"})
     @Test
-    public void newestVideo(@Optional("ptd19871")String channelName){
+    public void newestVideo(@Optional("Troll Fuck Lol")String channelName){
         driver.get("https://www.youtube.com/");
         Main main = PageFactory.initElements(driver, Main.class);
         Search search = main.header.searchAndClearBefore(channelName);
+        sleep(2);
         ChannelHome channelHome = search.clickSearchResultChannel(0);
         ChannelVideo channelVideo = channelHome.gotoChanelVideo();
         Video video = channelVideo.openVideo(0);

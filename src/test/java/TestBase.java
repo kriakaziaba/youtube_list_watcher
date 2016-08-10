@@ -2,6 +2,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -18,8 +19,7 @@ public class TestBase {
 
     @Parameters({"browser"})
     @BeforeSuite
-    public void browserSetup(@Optional("chrome")String name){
-        DesiredCapabilities cap;
+    public void browserSetup(@Optional("ff")String name){
         switch (name){
             case "ch":
             default:
@@ -28,9 +28,9 @@ public class TestBase {
                 driver = new ChromeDriver(options);
                 break;
             case "ff":
-                cap = DesiredCapabilities.firefox();
-                cap.setCapability("marionette", true);
-                driver = new FirefoxDriver(cap);
+                DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+                capabilities.setCapability("marionette", true);
+                driver = new FirefoxDriver(capabilities);
                 break;
         }
         driver.manage().window().maximize();
